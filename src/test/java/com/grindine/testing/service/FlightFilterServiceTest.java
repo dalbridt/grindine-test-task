@@ -38,10 +38,8 @@ class FlightFilterServiceTest {
                 );
             }
         };
-
-        FlightFilter depFilter = new DepartedFlightFilter(now);
-
         FlightFilterService flightFilterService = new FlightFilterService(repoDepartedFlights);
+        FlightFilter depFilter = new DepartedFlightFilter(now);
         List<Flight> filtred = flightFilterService.doFilter(depFilter);
 
         assertEquals(2, filtred.size());
@@ -68,8 +66,9 @@ class FlightFilterServiceTest {
                 );
             }
         };
-        FlightFilter inconsistencyFilter = new InconsistentDateFlightFilter();
         FlightFilterService flightFilterService = new FlightFilterService(repoInconsistentFlights);
+
+        FlightFilter inconsistencyFilter = new InconsistentDateFlightFilter();
         List<Flight> filtred = flightFilterService.doFilter(inconsistencyFilter);
 
         assertEquals(1, filtred.size());
@@ -95,8 +94,10 @@ class FlightFilterServiceTest {
                 );
             }
         };
-        FlightFilter transferTimeFilter = new TransferTimeFilter(3);
+
         FlightFilterService flightFilterService = new FlightFilterService(repoInconsistentFlights);
+        FlightFilter transferTimeFilter = new TransferTimeFilter(3);
+
         List<Flight> filtred = flightFilterService.doFilter(transferTimeFilter);
 
         assertEquals(2, filtred.size());
@@ -109,11 +110,13 @@ class FlightFilterServiceTest {
         // создаем репо
         FlightRepository repo = new TestDataClass();
 
+        FlightFilterService flightFilterService = new FlightFilterService(repo);
+
         FlightFilter depFilter = new DepartedFlightFilter(now);
         FlightFilter inconsistencyFilter = new InconsistentDateFlightFilter();
         FlightFilter transferTimeFilter = new TransferTimeFilter(8);
 
-        FlightFilterService flightFilterService = new FlightFilterService(repo);
+
         List<Flight> filtred = flightFilterService.doFilter(depFilter, inconsistencyFilter, transferTimeFilter);
 
         assertEquals(3, filtred.size());
